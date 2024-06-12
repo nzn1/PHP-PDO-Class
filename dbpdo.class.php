@@ -5,6 +5,8 @@
  * @version 1.1
  * 1.0 - First version launched. Allows access to one database and a few regular functions have been created.
  * 1.1 - Added a constructor which allows multiple databases to be called on different variables.
+ * @author NZN https://github.com/nzn1/PHP-PDO-Class
+ * 1.2 - charset support, improved debugging (show query, params, file, line), "result" method for unbuffered query, return insert id or num rows depending on query, lastQuery method, "sql_escape" utility function.
  */
 class dbpdo {
   # Database host address, defined in construction.
