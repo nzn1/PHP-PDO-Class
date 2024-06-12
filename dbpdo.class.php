@@ -208,3 +208,21 @@ class dbpdo {
     return $this->debug(null, $this->lastquery, $this->lastparameters);
   }
 }
+
+if (!function_exists('sql_escape')) {
+  function sql_escape($value) {
+      $return = '';
+
+      for($i = 0; $i < strlen($value); ++$i) {
+        $char = $value[$i];
+        $ord = ord($char);
+        if($char !== "'" && $char !== "\"" && $char !== '\\' && $ord >= 32 && $ord <= 126) {
+          $return .= $char;
+        } else {
+          $return .= '\\x' . dechex($ord);
+        }
+      }
+
+      return $return;
+  }
+}
