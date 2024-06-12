@@ -25,9 +25,9 @@ class dbpdo {
   # @bool this controls if the errors are displayed. By default, this is set to true.
   private $errors = true;
 
-  function __construct($db_host, $db_username, $db_password, $db_database){
+  function __construct($db_host, $db_username, $db_password, $db_database) {
     global $c;
-    try{
+    try {
       $this->host = $db_host;
       $this->username = $db_username;
       $this->password = $db_password;
@@ -39,130 +39,130 @@ class dbpdo {
       $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
       $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
-    catch(PDOException $e){
+    catch(PDOException $e) {
       $this->connected = false;
-      if($this->errors === true){
+      if ($this->errors === true) {
         return $this->error($e->getMessage());
-      }else{
+      } else {
         return false;
       }
     }
   }
 
-  function __destruct(){
+  function __destruct() {
     $this->connected = false;
     $this->connection = null;
   }
 
-  public function error($error){
+  public function error($error) {
     echo $error;
   }
 
-  public function fetch($query, $parameters = array()){
-    if($this->connected === true){
-      try{
+  public function fetch($query, $parameters = array()) {
+    if ($this->connected === true) {
+      try {
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
         return $query->fetch();
       }
-      catch(PDOException $e){
-        if($this->errors === true){
+      catch(PDOException $e) {
+        if ($this->errors === true) {
           return $this->error($e->getMessage());
-        }else{
+        } else {
           return false;
         }
       }
-    }else{
+    } else {
       return false;
     }
   }
 
-  public function fetchAll($query, $parameters = array()){
-    if($this->connected === true){
-      try{
+  public function fetchAll($query, $parameters = array()) {
+    if ($this->connected === true) {
+      try {
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
         return $query->fetchAll();
       }
-      catch(PDOException $e){
-        if($this->errors === true){
+      catch(PDOException $e) {
+        if ($this->errors === true) {
           return $this->error($e->getMessage());
-        }else{
+        } else {
           return false;
         }
       }
-    }else{
+    } else {
       return false;
     }
   }
 
-  public function count($query, $parameters = array()){
-    if($this->connected === true){
-      try{
+  public function count($query, $parameters = array()) {
+    if ($this->connected === true) {
+      try {
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
         return $query->rowCount();
       }
-      catch(PDOException $e){
-        if($this->errors === true){
+      catch(PDOException $e) {
+        if ($this->errors === true) {
           return $this->error($e->getMessage());
-        }else{
+        } else {
           return false;
         }
       }
-    }else{
+    } else {
       return false;
     }
   }
 
-  public function insert($query, $parameters = array()){
-    if($this->connected === true){
-      try{
+  public function insert($query, $parameters = array()) {
+    if ($this->connected === true) {
+      try {
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
       }
-      catch(PDOException $e){
-        if($this->errors === true){
+      catch(PDOException $e) {
+        if ($this->errors === true) {
           return $this->error($e->getMessage());
-        }else{
+        } else {
           return false;
         }
       }
-    }else{
+    } else {
       return false;
     }
   }
 
-  public function update($query, $parameters = array()){
-    if($this->connected === true){
+  public function update($query, $parameters = array()) {
+    if ($this->connected === true) {
       return $this->insert($query, $parameters);
-    }else{
+    } else {
       return false;
     }
   }
 
-  public function delete($query, $parameters = array()){
-    if($this->connected === true){
+  public function delete($query, $parameters = array()) {
+    if ($this->connected === true) {
       return $this->insert($query, $parameters);
-    }else{
+    } else {
       return false;
     }
   }
 
-  public function tableExists($table){
-    if($this->connected === true){
-      try{
+  public function tableExists($table) {
+    if ($this->connected === true) {
+      try {
         $query = $this->count("SHOW TABLES LIKE '$table'");
         return ($query > 0) ? true : false;
       }
-      catch(PDOException $e){
-        if($this->errors === true){
+      catch(PDOException $e) {
+        if ($this->errors === true) {
           return $this->error($e->getMessage());
-        }else{
+        } else {
           return false;
         }
       }
-    }else{
+    } else {
       return false;
     }
   }
