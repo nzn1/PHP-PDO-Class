@@ -21,11 +21,12 @@ class dbpdo {
 
   # @bool default for this is to be left to FALSE, please. This determines the connection state.
   public $connected = false;
+  public $charset = null;
 
   # @bool this controls if the errors are displayed. By default, this is set to true.
   private $errors = true;
 
-  function __construct($db_host, $db_username, $db_password, $db_database) {
+  function __construct($db_host, $db_username, $db_password, $db_database, $charset = 'utf8mb4') {
     global $c;
     try {
       $this->host = $db_host;
@@ -33,8 +34,9 @@ class dbpdo {
       $this->password = $db_password;
       $this->database = $db_database;
       $this->connected = true;
+      $this->charset = $charset;
 
-      $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->database, $this->username, $this->password);
+      $this->connection = new PDO("mysql:host=$this->host;dbname=$this->database;charset=$this->charset", $this->username, $this->password);
       $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
       $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
