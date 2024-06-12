@@ -78,6 +78,27 @@ class dbpdo {
     die;
   }
 
+  public function result($query, $parameters = []) {
+    if ($this->connected === true) {
+      try {
+        $this->lastquery = $query;
+        $this->lastparameters = $parameters;
+        $query = $this->connection->prepare($query);
+        $query->execute($parameters);
+        return $query;
+      }
+      catch(PDOException $e) {
+        if ($this->errors === true) {
+          return $this->error($e->getMessage(), $query, $parameters);
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+
   public function fetch($query, $parameters = []) {
     if ($this->connected === true) {
       try {
