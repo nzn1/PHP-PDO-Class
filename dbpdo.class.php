@@ -25,6 +25,8 @@ class dbpdo {
 
   # @bool this controls if the errors are displayed. By default, this is set to true.
   private $errors = true;
+  private $lastquery = '';
+  private $lastparameters = '';
 
   function __construct($db_host, $db_username, $db_password, $db_database, $charset = 'utf8mb4') {
     global $c;
@@ -79,6 +81,8 @@ class dbpdo {
   public function fetch($query, $parameters = array()) {
     if ($this->connected === true) {
       try {
+        $this->lastquery = $query;
+        $this->lastparameters = $parameters;
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
         return $query->fetch();
@@ -98,6 +102,8 @@ class dbpdo {
   public function fetchAll($query, $parameters = array()) {
     if ($this->connected === true) {
       try {
+        $this->lastquery = $query;
+        $this->lastparameters = $parameters;
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
         return $query->fetchAll();
@@ -117,6 +123,8 @@ class dbpdo {
   public function count($query, $parameters = array()) {
     if ($this->connected === true) {
       try {
+        $this->lastquery = $query;
+        $this->lastparameters = $parameters;
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
         return $query->rowCount();
@@ -136,6 +144,8 @@ class dbpdo {
   public function insert($query, $parameters = array()) {
     if ($this->connected === true) {
       try {
+        $this->lastquery = $query;
+        $this->lastparameters = $parameters;
         $query = $this->connection->prepare($query);
         $query->execute($parameters);
       }
@@ -171,6 +181,8 @@ class dbpdo {
     if ($this->connected === true) {
       try {
         $query = $this->count("SHOW TABLES LIKE '$table'");
+        $this->lastquery = $query;
+        $this->lastparameters = $parameters;
         return ($query > 0) ? true : false;
       }
       catch(PDOException $e) {
@@ -183,5 +195,9 @@ class dbpdo {
     } else {
       return false;
     }
+  }
+
+  public function lastQuery() {
+    return $this->debug(null, $this->lastquery, $this->lastparameters);
   }
 }
