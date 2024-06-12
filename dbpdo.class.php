@@ -141,37 +141,23 @@ class dbpdo {
     }
   }
 
-  public function insert($query, $parameters = []) {
+  public function execute($querystring, $parameters = []) {
     if ($this->connected === true) {
       try {
-        $this->lastquery = $query;
+        $this->lastquery = $querystring;
         $this->lastparameters = $parameters;
-        $query = $this->connection->prepare($query);
+        $query = $this->connection->prepare($querystring);
         $query->execute($parameters);
+        $insert_query = preg_match('~INSERT~i', ltrim($querystring));
+        return $insert_query ? $this->connection->lastInsertId() : $query->rowCount();
       }
       catch(PDOException $e) {
         if ($this->errors === true) {
-          return $this->error($e->getMessage(), $query, $parameters);
+          return $this->error($e->getMessage(), $querystring, $parameters);
         } else {
           return false;
         }
       }
-    } else {
-      return false;
-    }
-  }
-
-  public function update($query, $parameters = []) {
-    if ($this->connected === true) {
-      return $this->insert($query, $parameters);
-    } else {
-      return false;
-    }
-  }
-
-  public function delete($query, $parameters = []) {
-    if ($this->connected === true) {
-      return $this->insert($query, $parameters);
     } else {
       return false;
     }
