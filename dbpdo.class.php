@@ -6,7 +6,7 @@
  * 1.0 - First version launched. Allows access to one database and a few regular functions have been created.
  * 1.1 - Added a constructor which allows multiple databases to be called on different variables.
  */
-class db{
+class dbpdo {
 	# Database host address, defined in construction.
 	protected $host;
 	# Username for authentication, defined in construction.
