@@ -44,7 +44,7 @@ class dbpdo {
     catch(PDOException $e) {
       $this->connected = false;
       if ($this->errors === true) {
-        return $this->error($e->getMessage());
+        return $this->error($e->getMessage(), '', '');
       } else {
         return false;
       }
@@ -56,8 +56,24 @@ class dbpdo {
     $this->connection = null;
   }
 
-  public function error($error) {
-    echo $error;
+  public function debug($error, $query, $parameters) {
+    $error = $error ? ['DB error:' => $error] : [];
+
+    return '<pre style="direction: ltr; text-align: left; background: white">'
+      . print_r(array_merge(
+      $error,
+      [
+        'query:' => $query,
+        'parameters:' => $parameters,
+        'file:' => debug_backtrace()[1]['file'],
+        'line:' => debug_backtrace()[1]['line']
+      ]), 1)
+      . '</pre>';
+  }
+
+  public function error($error, $query, $parameters) {
+    echo $this->debug($error, $query, $parameters);
+    die;
   }
 
   public function fetch($query, $parameters = array()) {
@@ -69,7 +85,7 @@ class dbpdo {
       }
       catch(PDOException $e) {
         if ($this->errors === true) {
-          return $this->error($e->getMessage());
+          return $this->error($e->getMessage(), $query, $parameters);
         } else {
           return false;
         }
@@ -88,7 +104,7 @@ class dbpdo {
       }
       catch(PDOException $e) {
         if ($this->errors === true) {
-          return $this->error($e->getMessage());
+          return $this->error($e->getMessage(), $query, $parameters);
         } else {
           return false;
         }
@@ -107,7 +123,7 @@ class dbpdo {
       }
       catch(PDOException $e) {
         if ($this->errors === true) {
-          return $this->error($e->getMessage());
+          return $this->error($e->getMessage(), $query, $parameters);
         } else {
           return false;
         }
@@ -125,7 +141,7 @@ class dbpdo {
       }
       catch(PDOException $e) {
         if ($this->errors === true) {
-          return $this->error($e->getMessage());
+          return $this->error($e->getMessage(), $query, $parameters);
         } else {
           return false;
         }
@@ -159,7 +175,7 @@ class dbpdo {
       }
       catch(PDOException $e) {
         if ($this->errors === true) {
-          return $this->error($e->getMessage());
+          return $this->error($e->getMessage(), $query, $parameters);
         } else {
           return false;
         }
