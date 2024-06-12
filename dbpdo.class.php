@@ -78,7 +78,7 @@ class dbpdo {
     die;
   }
 
-  public function fetch($query, $parameters = array()) {
+  public function fetch($query, $parameters = []) {
     if ($this->connected === true) {
       try {
         $this->lastquery = $query;
@@ -99,7 +99,7 @@ class dbpdo {
     }
   }
 
-  public function fetchAll($query, $parameters = array()) {
+  public function fetchAll($query, $parameters = []) {
     if ($this->connected === true) {
       try {
         $this->lastquery = $query;
@@ -120,7 +120,7 @@ class dbpdo {
     }
   }
 
-  public function count($query, $parameters = array()) {
+  public function count($query, $parameters = []) {
     if ($this->connected === true) {
       try {
         $this->lastquery = $query;
@@ -141,7 +141,7 @@ class dbpdo {
     }
   }
 
-  public function insert($query, $parameters = array()) {
+  public function insert($query, $parameters = []) {
     if ($this->connected === true) {
       try {
         $this->lastquery = $query;
@@ -161,7 +161,7 @@ class dbpdo {
     }
   }
 
-  public function update($query, $parameters = array()) {
+  public function update($query, $parameters = []) {
     if ($this->connected === true) {
       return $this->insert($query, $parameters);
     } else {
@@ -169,7 +169,7 @@ class dbpdo {
     }
   }
 
-  public function delete($query, $parameters = array()) {
+  public function delete($query, $parameters = []) {
     if ($this->connected === true) {
       return $this->insert($query, $parameters);
     } else {
