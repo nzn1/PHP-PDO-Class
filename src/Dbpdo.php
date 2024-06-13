@@ -1,4 +1,8 @@
 <?php
+namespace Nzn1\PhpPdoClass;
+
+require_once 'vendor/autoload.php';
+
 /**
  * Simple PHP PDO Class
  * @author Miks Zvirbulis (twitter.com/MiksZvirbulis)
@@ -8,7 +12,8 @@
  * @author NZN https://github.com/nzn1/PHP-PDO-Class
  * 1.2 - charset support, improved debugging (show query, params, file, line), "result" method for unbuffered query, return insert id or num rows depending on query, lastQuery method, "sql_escape" utility function.
  */
-class dbpdo {
+
+class Dbpdo {
   # Database host address, defined in construction.
   protected $host;
   # Username for authentication, defined in construction.
@@ -40,10 +45,10 @@ class dbpdo {
       $this->connected = true;
       $this->charset = $charset;
 
-      $this->connection = new PDO("mysql:host=$this->host;dbname=$this->database;charset=$this->charset", $this->username, $this->password);
-      $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-      $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+      $this->connection = new \PDO("mysql:host=$this->host;dbname=$this->database;charset=$this->charset", $this->username, $this->password);
+      $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+      $this->connection->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+      $this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     }
     catch(PDOException $e) {
       $this->connected = false;

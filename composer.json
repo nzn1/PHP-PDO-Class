@@ -1,7 +1,19 @@
 {
     "name": "nzn1/php-pdo-class",
-    "description": "Simple-PDO-Class",
+    "description": "Simple PDO Class",
+    "type": "library",
     "require": {
         "php": ">=5.4"
-    }
+    },
+    "autoload": {
+        "psr-4": {
+            "Nzn1\\PhpPdoClass\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Netanel Neuman",
+            "email": "netanel@nneuman.net"
+        }
+    ]
 }
