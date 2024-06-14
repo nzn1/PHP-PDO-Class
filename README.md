@@ -18,4 +18,4 @@ $db = new db("localhost", "root", "password", "database");
 
 ## Installation
 * `composer require nzn1/php-pdo-class`
-* standard composer autoloading: `require vendor/autoload.php;`
+* standard composer autoloading: `require 'vendor/autoload.php';`
