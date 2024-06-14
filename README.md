@@ -13,7 +13,8 @@ Calling class on variable $db (this can be any variable name). Find construction
 **You do NOT need to use quotes as PDO sorts this out for you during query preperation.**
 
 ```
-$db = new db("localhost", "root", "password", "database");
+use Nzn1\PhpPdoClass\Dbpdo;
+$db = new Dbpdo("localhost", "root", "password", "database");
 ```
 
 ## Installation
