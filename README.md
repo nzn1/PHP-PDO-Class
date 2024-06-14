@@ -15,3 +15,7 @@ Calling class on variable $db (this can be any variable name). Find construction
 ```
 $db = new db("localhost", "root", "password", "database");
 ```
+
+## Installation
+* `composer require nzn1/php-pdo-class`
+* standard composer autoloading: `require vendor/autoload.php;`
